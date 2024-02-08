@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:travel_scope/Views/OTP_Screen.dart';
 import 'package:travel_scope/Views/Register.dart';

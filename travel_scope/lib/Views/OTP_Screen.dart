@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class OTP extends StatefulWidget {
@@ -25,14 +26,14 @@ class _OTPState extends State<OTP> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Top Text
-            Text(
+            const Text(
               'Enter the OTP code here',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // OTP Input Row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -45,7 +46,7 @@ class _OTPState extends State<OTP> {
                     maxLength: 1,
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       counterText: '',
                       border: OutlineInputBorder(),
                     ),
@@ -58,7 +59,7 @@ class _OTPState extends State<OTP> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Submit Button
             ElevatedButton(
               onPressed: () {
@@ -67,7 +68,7 @@ class _OTPState extends State<OTP> {
                     _controllers.map((controller) => controller.text).join();
                 print('Submitted OTP: $otp');
               },
-              child: Text('Submit'),
+              child: const Text('Submit'),
             ),
           ],
         ),
