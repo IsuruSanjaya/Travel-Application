@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:travel_scope/Views/Login.dart';
+import 'package:travel_scope/Views/OTP_Screen.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -56,7 +58,6 @@ class _RegisterState extends State<Register> {
                 SizedBox(height: 10),
                 Container(
                   width: 300,
-                  
                   child: TextFormField(
                     controller: _genderController,
                     decoration: InputDecoration(
@@ -97,15 +98,21 @@ class _RegisterState extends State<Register> {
                 SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle registration logic here
-                    // Access the entered values using _nameController.text, _ageController.text, etc.
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OTP()),
+                    );
                   },
                   child: Text('Register'),
                 ),
                 SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
-                    // Navigate to login screen for existing users
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Login()),
+                    );
                   },
                   child: Text('Already have an account? Login here'),
                 ),

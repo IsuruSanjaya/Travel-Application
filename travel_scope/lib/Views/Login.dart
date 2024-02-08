@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, sized_box_for_whitespace, file_names
 
 import 'package:flutter/material.dart';
+import 'package:travel_scope/Views/Register.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -18,8 +19,8 @@ class _LoginState extends State<Login> {
           children: [
             Container(
               decoration: BoxDecoration(
-                color:
-                    Color.fromARGB(255, 169, 189, 204), // Set the background color
+                color: Color.fromARGB(
+                    255, 169, 189, 204), // Set the background color
                 borderRadius: BorderRadius.circular(5), // Set the border radius
               ),
             ),
@@ -36,7 +37,6 @@ class _LoginState extends State<Login> {
                     ),
                     SizedBox(height: 20),
                     Container(
-                      
                       width: 300,
                       child: TextField(
                         decoration: InputDecoration(
@@ -44,12 +44,11 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       // color: Color.fromARGB(
-                      //     255, 237, 231, 236), 
-                          // Set the background color
+                      //     255, 237, 231, 236),
+                      // Set the background color
                     ),
                     SizedBox(height: 10),
-                    
-                    
+
                     Container(
                       width: 300,
                       child: TextField(
@@ -75,8 +74,14 @@ class _LoginState extends State<Login> {
                           foregroundColor:
                               MaterialStateProperty.all<Color>(Colors.red),
                         ),
-                        onPressed: () {},
-                        child: Text('Already have an account'),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Register()),
+                          );
+                        },
+                        child: Text('No account ? SignUp'),
                       ),
                     ),
                     SizedBox(height: 10),

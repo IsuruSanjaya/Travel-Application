@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:travel_scope/Views/Home.dart';
 
 class OTP extends StatefulWidget {
   const OTP({Key? key}) : super(key: key);
@@ -63,10 +63,10 @@ class _OTPState extends State<OTP> {
             // Submit Button
             ElevatedButton(
               onPressed: () {
-                // Handle submit logic here
-                String otp =
-                    _controllers.map((controller) => controller.text).join();
-                print('Submitted OTP: $otp');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Home()),
+                );
               },
               child: const Text('Submit'),
             ),
