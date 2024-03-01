@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:travel_scope/Views/Home.dart';
 
 class OTP extends StatefulWidget {
-  const OTP({Key? key}) : super(key: key);
+    final String verificationId;
+  const OTP({Key? key, required this.verificationId}) : super(key: key);
 
   @override
   State<OTP> createState() => _OTPState();
@@ -16,6 +17,7 @@ class _OTPState extends State<OTP> {
     super.initState();
     _controllers = List.generate(6, (index) => TextEditingController());
   }
+
 
   @override
   Widget build(BuildContext context) {

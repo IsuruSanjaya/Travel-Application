@@ -1,6 +1,5 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:travel_scope/Views/Login.dart';
 import 'package:travel_scope/Views/OTP_Screen.dart';
 
@@ -12,12 +11,56 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  String? verificationId; // Declare verificationId variable
+
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> _submitForm() async {
+    String phoneNumber =
+        '+94${_mobileController.text}'; // Modify country code as needed
+    try {
+      await _auth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          // Automatic verification
+          await _auth.signInWithCredential(credential);
+          // Navigate to OTP Screen or do something else
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OTP(verificationId: verificationId ?? ""),
+            ),
+          );
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          print('Error: ${e.message}');
+          // Handle verification failure
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          // Navigate to OTP Screen and pass verificationId
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OTP(verificationId: verificationId),
+            ),
+          );
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          // Handle timeout
+        },
+      );
+    } catch (e) {
+      print('Error sending OTP: $e');
+      // Handle error
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,73 +79,50 @@ class _RegisterState extends State<Register> {
                   width: 100,
                 ),
                 SizedBox(height: 10),
-                Container(
-                  width: 300,
-                  child: TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      hintText: 'Name',
-                    ),
+                TextFormField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    hintText: 'Name',
                   ),
                 ),
                 SizedBox(height: 10),
-                Container(
-                  width: 300,
-                  child: TextFormField(
-                    controller: _ageController,
-                    decoration: InputDecoration(
-                      hintText: 'Age',
-                    ),
+                TextFormField(
+                  controller: _ageController,
+                  decoration: InputDecoration(
+                    hintText: 'Age',
                   ),
                 ),
                 SizedBox(height: 10),
-                Container(
-                  width: 300,
-                  child: TextFormField(
-                    controller: _genderController,
-                    decoration: InputDecoration(
-                      hintText: 'Gender',
-                    ),
+                TextFormField(
+                  controller: _genderController,
+                  decoration: InputDecoration(
+                    hintText: 'Gender',
                   ),
                 ),
                 SizedBox(height: 10),
-                Container(
-                  width: 300,
-                  child: TextFormField(
-                    controller: _countryController,
-                    decoration: InputDecoration(
-                      hintText: 'Country',
-                    ),
+                TextFormField(
+                  controller: _countryController,
+                  decoration: InputDecoration(
+                    hintText: 'Country',
                   ),
                 ),
                 SizedBox(height: 10),
-                Container(
-                  width: 300,
-                  child: TextFormField(
-                    controller: _mobileController,
-                    decoration: InputDecoration(
-                      hintText: 'Mobile Number',
-                    ),
-                    keyboardType: TextInputType.phone,
+                TextFormField(
+                  controller: _mobileController,
+                  decoration: InputDecoration(
+                    hintText: 'Mobile Number',
                   ),
+                  keyboardType: TextInputType.phone,
                 ),
-                Container(
-                  width: 300,
-                  alignment: Alignment.center, // Center the placeholder
-                  child: TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(labelText: 'Email'),
-                    keyboardType: TextInputType.emailAddress,
-                  ),
+                SizedBox(height: 10),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(labelText: 'Email'),
+                  keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(height: 30),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => OTP()),
-                    );
-                  },
+                  onPressed: _submitForm,
                   child: Text('Register'),
                 ),
                 SizedBox(height: 10),
@@ -110,8 +130,7 @@ class _RegisterState extends State<Register> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const Login()),
+                      MaterialPageRoute(builder: (context) => const Login()),
                     );
                   },
                   child: Text('Already have an account? Login here'),
